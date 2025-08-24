@@ -20,7 +20,7 @@ public class Square extends JButton implements ActionListener {
 
     protected void paintComponent(Graphics gr) {
         if (!pressed) {
-            gr.setColor(Color.pink);
+            gr.setColor(new Color(255, 153, 194));
             gr.fillRect(0, 0, getWidth(), getHeight());
             gr.setColor(Color.black);
             gr.drawRect(0, 0, getWidth(), getHeight());
