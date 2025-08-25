@@ -11,6 +11,7 @@ public class Square extends JButton implements ActionListener {
     boolean isHeart;
     boolean pressed;
     Image heart = new ImageIcon(getClass().getResource("/heart.png")).getImage();
+    int number;
 
     public Square(int xIn, int yIn, boolean isHeartIn) {
         x = xIn;
@@ -19,6 +20,10 @@ public class Square extends JButton implements ActionListener {
         pressed = false;
 
         this.addActionListener(this);
+    }
+
+    public void setNumber(int num) {
+        number = num;
     }
 
     protected void paintComponent(Graphics gr) {
@@ -38,6 +43,13 @@ public class Square extends JButton implements ActionListener {
 
             if (isHeart) {
                 gr.drawImage(heart, 0, 0, getWidth(), getHeight(), null);
+            }
+            else if (number > 0) {
+                Color[] numColours = {Color.blue, Color.green, Color.yellow, Color.pink,
+                        Color.red, Color.magenta, Color.orange, Color.darkGray};
+                gr.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
+                gr.setColor(numColours[number - 1]);
+                gr.drawString(Integer.toString(number), 7, 20);
             }
         }
     }
