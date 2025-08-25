@@ -2,6 +2,7 @@ package org.example;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
 public class Main {
 
@@ -17,9 +18,10 @@ public class Main {
         JPanel game = new JPanel();
         game.setLayout(new GridLayout(height, width));
         Square[] squares = new Square[height * width];
+        Random rand = new Random();
 
         for (int i = 0; i < (height * width); i++) {
-            squares[i] = new Square(xCurr, yCurr);
+            squares[i] = new Square(xCurr, yCurr, (rand.nextFloat() < 0.2));
             game.add(squares[i]);
 
             if (xCurr == (width - 1)) {
