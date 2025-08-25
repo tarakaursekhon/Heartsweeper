@@ -80,7 +80,7 @@ public class Main {
         endText.setBackground(new Color(255, 255, 255, 200));
         endText.setOpaque(true);
         endText.setBorder(new EmptyBorder(0, 40, 0, 40));
-        endText.setBounds(200, 200, 200, 100);
+        endText.setBounds(200, 250, 200, 100);
         layers.add(endText, JLayeredPane.POPUP_LAYER);
 
         screen.repaint();
