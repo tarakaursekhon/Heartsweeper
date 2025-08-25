@@ -1,28 +1,32 @@
 package org.example;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.Random;
 
 public class Main {
 
-    public static void main(String[] args) {
-        int height = 20;
-        int width = 20;
-        int xCurr = 0;
-        int yCurr = 0;
-        int num;
+    static int height = 20;
+    static int width = 20;
+    static int xCurr = 0;
+    static int yCurr = 0;
+    static int num;
 
-        JFrame screen = new JFrame("heartsweeper <3");
+    static JFrame screen = new JFrame("heartsweeper <3");
+    static JLayeredPane layers = new JLayeredPane();
+    static JPanel game = new JPanel();
+    static Square[] squares = new Square[height * width];
+    static Random rand = new Random();
+
+    public static void main(String[] args) {
         screen.setSize(600, 600);
         screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JPanel game = new JPanel();
         game.setLayout(new GridLayout(height, width));
-        Square[] squares = new Square[height * width];
-        Random rand = new Random();
 
         for (int i = 0; i < (height * width); i++) {
-            squares[i] = new Square(xCurr, yCurr, (rand.nextFloat() < 0.2));
+            squares[i] = new Square(xCurr, yCurr, (rand.nextFloat() < 0.1));
 
             if (xCurr == (width - 1)) {
                 xCurr = 0;
@@ -59,8 +63,27 @@ public class Main {
             game.add(squares[i]);
         }
 
-        screen.add(game);
+        game.setBounds(0, 0, 600, 600);
+        layers.add(game, JLayeredPane.DEFAULT_LAYER);
+        screen.add(layers);
         screen.setVisible(true);
+    }
+
+    public static void endGame() {
+        for (int i = 0; i < (height * width); i++) {
+            squares[i].pressed = true;
+            squares[i].repaint();
+        }
+
+        JLabel endText = new JLabel("game over </3");
+        endText.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
+        endText.setBackground(new Color(255, 255, 255, 200));
+        endText.setOpaque(true);
+        endText.setBorder(new EmptyBorder(0, 40, 0, 40));
+        endText.setBounds(200, 200, 200, 100);
+        layers.add(endText, JLayeredPane.POPUP_LAYER);
+
+        screen.repaint();
     }
 
 }

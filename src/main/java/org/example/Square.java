@@ -43,6 +43,7 @@ public class Square extends JButton implements ActionListener {
 
             if (isHeart) {
                 gr.drawImage(heart, 0, 0, getWidth(), getHeight(), null);
+                Main.endGame();
             }
             else if (number > 0) {
                 Color[] numColours = {Color.blue, Color.green, Color.yellow, Color.pink,
