@@ -21,7 +21,7 @@ public class Main {
     static Random rand = new Random();
 
     public static void main(String[] args) {
-        screen.setSize(600, 600);
+        screen.setSize(614, 637);
         screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         game.setLayout(new GridLayout(height, width));
 
