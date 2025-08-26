@@ -1,7 +1,6 @@
 package org.example;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.Random;
@@ -26,7 +25,7 @@ public class Main {
         game.setLayout(new GridLayout(height, width));
 
         for (int i = 0; i < (height * width); i++) {
-            squares[i] = new Square(xCurr, yCurr, (rand.nextFloat() < 0.1));
+            squares[i] = new Square(xCurr, yCurr, i, (rand.nextFloat() < 0.1));
 
             if (xCurr == (width - 1)) {
                 xCurr = 0;
@@ -39,22 +38,13 @@ public class Main {
 
         for (int i = 0; i < (height * width); i++) {
             num = 0;
-            int[] toCheck = {
-                    i - width - 1,
-                    i - width,
-                    i - width + 1,
-                    i - 1,
-                    i + 1,
-                    i + width - 1,
-                    i + width,
-                    i + width + 1};
 
             if (!squares[i].isHeart) {
-                for (int j = 0; j < 8; j++) {
-                    if (toCheck[j] >= 0 && toCheck[j] < (height * width)) {
-                        if (squares[toCheck[j]].isHeart) {
-                            num++;
-                        }
+                Square[] adjacentSquares = getAdjacentSquares(squares[i]);
+
+                for (int j = 0; j < adjacentSquares.length; j++) {
+                    if (adjacentSquares[j].isHeart) {
+                        num++;
                     }
                 }
             }
@@ -67,6 +57,80 @@ public class Main {
         layers.add(game, JLayeredPane.DEFAULT_LAYER);
         screen.add(layers);
         screen.setVisible(true);
+    }
+
+    public static Square[] getAdjacentSquares(Square sqr) {
+        Square[] adjSqrs;
+
+        if (sqr.x == 0 && sqr.y == 0) {
+            adjSqrs = new Square[3];
+            adjSqrs[0] = squares[sqr.i + 1];
+            adjSqrs[1] = squares[sqr.i + width];
+            adjSqrs[2] = squares[sqr.i + width + 1];
+        }
+        else if (sqr.x == 0 && sqr.y == 19) {
+            adjSqrs = new Square[3];
+            adjSqrs[0] = squares[sqr.i - width];
+            adjSqrs[1] = squares[sqr.i - width + 1];
+            adjSqrs[2] = squares[sqr.i + 1];
+        }
+        else if (sqr.x == 19 && sqr.y == 0) {
+            adjSqrs = new Square[3];
+            adjSqrs[0] = squares[sqr.i - 1];
+            adjSqrs[1] = squares[sqr.i + width - 1];
+            adjSqrs[2] = squares[sqr.i + width];
+        }
+        else if (sqr.x == 19 && sqr.y == 19) {
+            adjSqrs = new Square[3];
+            adjSqrs[0] = squares[sqr.i - width - 1];
+            adjSqrs[1] = squares[sqr.i - width];
+            adjSqrs[2] = squares[sqr.i - 1];
+        }
+        else if (sqr.x == 0) {
+            adjSqrs = new Square[5];
+            adjSqrs[0] = squares[sqr.i - width];
+            adjSqrs[1] = squares[sqr.i - width + 1];
+            adjSqrs[2] = squares[sqr.i + 1];
+            adjSqrs[3] = squares[sqr.i + width];
+            adjSqrs[4] = squares[sqr.i + width + 1];
+        }
+        else if (sqr.x == 19) {
+            adjSqrs = new Square[5];
+            adjSqrs[0] = squares[sqr.i - width - 1];
+            adjSqrs[1] = squares[sqr.i - width];
+            adjSqrs[2] = squares[sqr.i - 1];
+            adjSqrs[3] = squares[sqr.i + width - 1];
+            adjSqrs[4] = squares[sqr.i + width];
+        }
+        else if (sqr.y == 0) {
+            adjSqrs = new Square[5];
+            adjSqrs[0] = squares[sqr.i - 1];
+            adjSqrs[1] = squares[sqr.i + 1];
+            adjSqrs[2] = squares[sqr.i + width - 1];
+            adjSqrs[3] = squares[sqr.i + width];
+            adjSqrs[4] = squares[sqr.i + width + 1];
+        }
+        else if (sqr.y == 19) {
+            adjSqrs = new Square[5];
+            adjSqrs[0] = squares[sqr.i - width - 1];
+            adjSqrs[1] = squares[sqr.i - width];
+            adjSqrs[2] = squares[sqr.i - width + 1];
+            adjSqrs[3] = squares[sqr.i - 1];
+            adjSqrs[4] = squares[sqr.i + 1];
+        }
+        else {
+            adjSqrs = new Square[8];
+            adjSqrs[0] = squares[sqr.i - width - 1];
+            adjSqrs[1] = squares[sqr.i - width];
+            adjSqrs[2] = squares[sqr.i - width + 1];
+            adjSqrs[3] = squares[sqr.i - 1];
+            adjSqrs[4] = squares[sqr.i + 1];
+            adjSqrs[5] = squares[sqr.i + width - 1];
+            adjSqrs[6] = squares[sqr.i + width];
+            adjSqrs[7] = squares[sqr.i + width + 1];
+        }
+
+        return adjSqrs;
     }
 
     public static void endGame() {

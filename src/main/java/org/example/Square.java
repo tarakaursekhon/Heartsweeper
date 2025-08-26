@@ -8,14 +8,16 @@ public class Square extends JButton implements ActionListener {
 
     int x;
     int y;
+    int i;
     boolean isHeart;
     boolean pressed;
     Image heart = new ImageIcon(getClass().getResource("/heart.png")).getImage();
     int number;
 
-    public Square(int xIn, int yIn, boolean isHeartIn) {
+    public Square(int xIn, int yIn, int iIn, boolean isHeartIn) {
         x = xIn;
         y = yIn;
+        i = iIn;
         isHeart = isHeartIn;
         pressed = false;
 
@@ -51,6 +53,9 @@ public class Square extends JButton implements ActionListener {
                 gr.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
                 gr.setColor(numColours[number - 1]);
                 gr.drawString(Integer.toString(number), 7, 20);
+            }
+            else {
+                Main.getAdjacentSquares(this);
             }
         }
     }
