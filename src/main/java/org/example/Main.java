@@ -25,7 +25,7 @@ public class Main {
         game.setLayout(new GridLayout(height, width));
 
         for (int i = 0; i < (height * width); i++) {
-            squares[i] = new Square(xCurr, yCurr, i, (rand.nextFloat() < 0.1));
+            squares[i] = new Square(xCurr, yCurr, i, (rand.nextFloat() < 0.15));
 
             if (xCurr == (width - 1)) {
                 xCurr = 0;
@@ -42,8 +42,8 @@ public class Main {
             if (!squares[i].isHeart) {
                 Square[] adjacentSquares = getAdjacentSquares(squares[i]);
 
-                for (int j = 0; j < adjacentSquares.length; j++) {
-                    if (adjacentSquares[j].isHeart) {
+                for (Square adjacentSquare : adjacentSquares) {
+                    if (adjacentSquare.isHeart) {
                         num++;
                     }
                 }

@@ -55,7 +55,14 @@ public class Square extends JButton implements ActionListener {
                 gr.drawString(Integer.toString(number), 7, 20);
             }
             else {
-                Main.getAdjacentSquares(this);
+                Square[] adjacentSquares = Main.getAdjacentSquares(this);
+
+                for (Square adjacentSquare : adjacentSquares) {
+                    if (!adjacentSquare.isHeart) {
+                        adjacentSquare.pressed = true;
+                        adjacentSquare.repaint();
+                    }
+                }
             }
         }
     }
