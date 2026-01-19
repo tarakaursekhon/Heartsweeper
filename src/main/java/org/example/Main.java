@@ -19,10 +19,25 @@ public class Main {
     static Square[] squares = new Square[height * width];
     static Random rand = new Random();
 
+    static String name = "?";
+    static short covered = 0;
+
     public static void main(String[] args) {
         screen.setSize(614, 637);
         screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         game.setLayout(new GridLayout(height, width));
+
+        JTextField enterName = new JTextField("enter name: ");
+        enterName.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
+        enterName.setBackground(new Color(255, 255, 255));
+        enterName.setOpaque(true);
+        enterName.setBorder(new EmptyBorder(0, 40, 0, 40));
+        enterName.setBounds(200, 250, 200, 100);
+
+        name = JOptionPane.showInputDialog(screen, enterName);
+        if (name == null || name.trim().isEmpty()) {
+            name = "?";
+        }
 
         for (int i = 0; i < (height * width); i++) {
             squares[i] = new Square(xCurr, yCurr, i, (rand.nextFloat() < 0.15));
@@ -134,6 +149,9 @@ public class Main {
     }
 
     public static void endGame() {
+        SaveScores save = new SaveScores();
+        save.SaveScores_CVM_main(name, Short.valueOf(covered));
+
         for (int i = 0; i < (height * width); i++) {
             squares[i].pressed = true;
             squares[i].repaint();

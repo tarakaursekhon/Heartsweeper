@@ -1,0 +1,1 @@
+    public static native void save_user_scores(BigDecimal var001, BigDecimal var002);

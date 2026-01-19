@@ -68,7 +68,8 @@ goto fail
 @rem Setup the command line
 
 set CLASSPATH=%APP_HOME%\gradle\wrapper\gradle-wrapper.jar
-
+:: set PATH=C:\Program Files (x86)\Rocket Software\extend 11.0.0\AcuGT\bin;C:\Program Files (x86)\Zulu\zulu-17\bin\server;
+:: set CLASSPATH=%APP_HOME%\gradle\wrapper\gradle-wrapper.jar;C:\Program Files (x86)\Rocket Software\extend 11.0.0\AcuGT\tools\CVM.jar;
 
 @rem Execute Gradle
 "%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %GRADLE_OPTS% "-Dorg.gradle.appname=%APP_BASE_NAME%" -classpath "%CLASSPATH%" org.gradle.wrapper.GradleWrapperMain %*

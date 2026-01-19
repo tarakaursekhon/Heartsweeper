@@ -4,14 +4,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Square extends JButton implements ActionListener {
+public class Square extends JButton implements MouseListener {
 
     int x;
     int y;
     int i;
     boolean isHeart;
+    boolean hasFlag;
     boolean pressed;
     Image heart = new ImageIcon(getClass().getResource("/heart.png")).getImage();
+    Image flag = new ImageIcon(getClass().getResource("/flag.png")).getImage();
     int number;
 
     public Square(int xIn, int yIn, int iIn, boolean isHeartIn) {
@@ -19,9 +21,10 @@ public class Square extends JButton implements ActionListener {
         y = yIn;
         i = iIn;
         isHeart = isHeartIn;
+        hasFlag = false;
         pressed = false;
 
-        this.addActionListener(this);
+        this.addMouseListener(this);
     }
 
     public void setNumber(int num) {
@@ -36,6 +39,10 @@ public class Square extends JButton implements ActionListener {
             gr.fillRect(0, 0, getWidth(), getHeight());
             gr.setColor(Color.black);
             gr.drawRect(0, 0, getWidth(), getHeight());
+
+            if (hasFlag) {
+                gr.drawImage(flag, 0, 0, getWidth(), getHeight(), null);
+            }
         }
         else {
             gr.setColor(Color.gray);
@@ -45,7 +52,6 @@ public class Square extends JButton implements ActionListener {
 
             if (isHeart) {
                 gr.drawImage(heart, 0, 0, getWidth(), getHeight(), null);
-                Main.endGame();
             }
             else if (number > 0) {
                 Color[] numColours = {Color.blue, Color.green, Color.yellow, Color.pink,
@@ -59,8 +65,11 @@ public class Square extends JButton implements ActionListener {
 
                 for (Square adjacentSquare : adjacentSquares) {
                     if (!adjacentSquare.isHeart) {
-                        adjacentSquare.pressed = true;
-                        adjacentSquare.repaint();
+                        if (!adjacentSquare.pressed) {
+                            adjacentSquare.pressed = true;
+                            adjacentSquare.repaint();
+                            Main.covered++;
+                        }
                     }
                 }
             }
@@ -68,9 +77,34 @@ public class Square extends JButton implements ActionListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        pressed = true;
+    public void mousePressed(MouseEvent e) {
+        if (SwingUtilities.isLeftMouseButton(e)) {
+            if (isHeart) {
+                Main.endGame();
+            }
+            pressed = true;
+            Main.covered++;
+        }
+        else if (SwingUtilities.isRightMouseButton(e)) {
+            if (!hasFlag) {
+                hasFlag = true;
+            }
+            else {
+                hasFlag = false;
+            }
+        }
         repaint();
     }
 
+    @Override
+    public void mouseClicked(MouseEvent e) {}
+
+    @Override
+    public void mouseReleased(MouseEvent e) {}
+
+    @Override
+    public void mouseEntered(MouseEvent e) {}
+
+    @Override
+    public void mouseExited(MouseEvent e) {}
 }
